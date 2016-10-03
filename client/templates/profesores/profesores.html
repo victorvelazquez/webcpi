@@ -1,0 +1,160 @@
+<template name="listaProfesores">	
+	<div class="page">
+		<h3 class="panel-title"><img src="img/profesor.png" class="imagen"> Profesores </h3>    
+        <hr>
+        {{#if registroCarreras}}
+		<div class="table">
+    		<table  class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Documento</th>
+						<th>Nombre</th>
+						<th>Correo</th>
+						<th>Celular</th>
+					</tr>
+				</thead>
+				<tbody>
+	    			{{#each profesores}}	
+					<tr>
+						<td style="width: 68px;">
+							<a href="{{pathFor 'editarProfesor'}}"><img src="img/editar.png"></a> 
+							{{#if noVinculado }}
+								<a href="#" class="btn-borrar"><img name="img-borrar" src="img/borrar.png"></a> 
+							{{/if}}	
+						</td>
+						<td>
+							{{ formatoNumerico documento }} 
+						</td>
+						<td>
+							{{ nombres }} 
+						</td>
+						<td>
+							{{ correo }} 
+						</td>
+						<td>
+							{{ movil }} 
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<h5><img src="img/info.png" style="width: 32px; height:32px; margin-right:5px;">{{registroCantidad}} Registro(s) encontrado(s)</h5>
+			{{> busqueda btnAgregar="agregarProfesor"}}
+			</div>
+	{{else}}
+		<h2><img src="img/atencion.png">Se debe cargar primero Carrera(s)</h2>
+	{{/if}}	
+	</div>		
+</template>	
+
+<template name="agregarProfesor">
+	<div class="page">
+	<form id="form-new-profesor">
+		<h3 class="panel-title"><img src="img/profesor.png" class="imagen"> Profesor - Agregar</h3>	
+		<hr>
+		{{> errors}}  
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+   			<input class="form-control" name="documento" id="documento" type="number" placeholder="Documento"/>
+   			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="nombre" id="nombre" type="text" placeholder="Nombres y Apellidos"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="correo" id="correo" placeholder="Correo electrónico"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="celular" id="celular" type="number" placeholder="Número de celular"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ En qué carrera enseña el Profesor ? </label>
+			<br>
+			<div style="margin-left:10px;">
+    		{{#each carreras}}
+      			<input type="checkbox" name="listafacultades[]" value="{{_id}}"> 
+      			<label for="listafacultades[]">{{nombre}}, {{facultad}}</label><br> 
+      			
+      		{{/each}}
+      		</div>
+      	</div>
+      	<hr>
+      	<div>
+      		<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+      	</div>
+      	<hr>
+    	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary submit"/>
+			<a class="btn btn-default" href="{{pathFor 'profesores'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+<template name="editarProfesor">
+	<div class="page">
+	<form id="form-edit-profesor">
+		<h3 class="panel-title"><img src="img/profesor.png" class="imagen"> Profesor - Editar</h3>	
+		<hr>
+		{{> errors}}  
+		<input type="hidden" name="id" id="id" value={{_id}} visible="false">
+		<input type="hidden" name="facus" id="facus" value={{facultades}} visible="false">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+   			<input class="form-control" name="documento" id="documento" type="number" placeholder="Documento" value="{{documento}}"/>
+   			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="nombre" id="nombre" type="text" placeholder="Nombres y Apellidos" value="{{nombres}}"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="correo" id="correo" placeholder="Correo electrónico" value="{{correo}}"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="celular" id="celular" type="number" placeholder="Número de celular" value="{{movil}}"/>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<div class="input-group">
+			<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ Qué carrera enseña el Profesor ? </label>
+			<br>			<div style="margin-left:10px;">
+    		{{#each carreras}}
+      			<input type="checkbox" name="listacarreras[]" value="{{_id}}" checked= "{{ esMarcado }}"> 
+   				<label for="listacarreras[]">{{nombre}}, {{facultad}} </label><br> 
+      		{{/each}}
+      		</div>
+      	</div>
+      	<hr>
+      	<div>
+      		<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+      	</div>
+      	<hr>
+    	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary submit"/>
+			<a class="btn btn-default" href="{{pathFor 'profesores'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+
+

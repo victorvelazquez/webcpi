@@ -1,0 +1,90 @@
+<template name="layout">
+  <head>
+    <link rel="icon" type="image/png" sizes="16x16 32x32" href="img/logo.png">
+  </head>
+	{{> header }}
+    <div class="container">
+      {{> yield }}
+    </div>
+    <footer style="text-align: center;">
+      <p>Copyright &copy; FACITEC, 2016.</p>
+    </footer>
+</template>
+
+
+<template name="header"> 
+     <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div style="float:left;">
+                  <img src="img/logo.png">  
+                </div>
+                <a class="navbar-brand" style="margin-left: -10px; color: #555; font-size: 30px; color: #337ab7;" href="/">Web CPI </a>
+            </div>
+          {{#if currentUser}}
+            <div class="collapse navbar-collapse">
+              {{#if isAdmin}}
+                {{> menuBaseDatos}}
+                {{> menuProcesos}}
+              {{/if}}    
+              {{#if isTeacher }}
+                {{> menuProcesos}}
+              {{/if}}
+
+              {{#with currentUser}}
+                  {{> menuUsuario}}
+              {{/with}}   
+				  </div>
+          {{/if}}
+        </div>
+    </nav>
+</template>	
+
+<template name="menuBaseDatos">
+   <ul class="nav navbar-nav">
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Base de Datos <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{pathFor 'facultades'}}"><img src="img/facultad.png" class="icono">Facultades </a></li>
+            <li class="divider"></li>
+            <li><a href="{{pathFor 'carreras'}}"><img src="img/carrera.png" class="icono">Carreras </a></li>
+            <li class="divider"></li>
+            <li><a href="{{pathFor 'profesores'}}"><img src="img/profesor.png" class="icono">Profesores </a></li>
+            <li class="divider"></li>
+            <li><a href="{{pathFor 'materias'}}"><img src="img/materia.png" class="icono">Materias </a></li>
+        </ul>
+      </li>
+    </ul>
+</template>
+
+<template name="menuProcesos">
+  <ul class="nav navbar-nav">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Procesos <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="{{pathFor 'preguntas'}}"><img src="img/preguntas.png" class="icono">Preguntas / Respuestas </a></li>
+          <li class="divider"></li>
+            <li><a href="{{pathFor 'examenes'}}"><img src="img/examen.png" class="icono">Examen(es) </a></li>
+       </ul>
+    </li>
+  </ul>
+</template>
+
+<template name="menuUsuario">
+  <ul class="nnav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="img/acceso.png">{{username}} <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+          <li><a id="user-edit" href="#"><img src="img/editar.png" class="icono"> Cambiar clave </a></li>
+          <li class="divider"></li>
+          <li><a id="logout-button" href="#"><img src="img/logout.png" class="icono"> Salir </a></li>
+      </ul>
+    </li>
+  </ul>
+</template>

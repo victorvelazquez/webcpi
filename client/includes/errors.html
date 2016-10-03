@@ -1,0 +1,17 @@
+<template name="errors">
+  <div class="errors">
+    {{#each errors}}
+      {{> error}}
+    {{/each}}
+  </div>
+
+</template>
+
+<template name="error">
+  <div class="alert alert-danger" role="alert">
+    <img src="/img/atencion.png" class="imagen">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{message}}
+  </div>
+  <br>
+</template>

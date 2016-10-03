@@ -1,0 +1,19 @@
+<template name="accesoDenegado">
+  <div class="access-denied page jumbotron" style="text-align: center">
+  	<img style="width: 128px; height: 128px;" src="/img/noacceso.png">
+    <h3>Acceso Denegado</h3>
+    <p>Por favor iniciar sesión.</p>
+    <br>
+    <a class="btn btn-default" href="{{pathFor 'login'}}">Iniciar sesión</a>
+  </div>
+</template>
+
+<template name="accesoProhibido">
+  <div class="access-denied page jumbotron" style="text-align: center">
+  	<img style="width: 128px; height: 128px;" src="/img/prohibido.png">
+    <h3>No tiene acceso a esta página</h3>
+    <p>Por favor volver al inicio</p>
+    <br>
+    <a class="btn btn-default boton" href="/">Inicio</a>
+  </div>
+</template>

@@ -1,0 +1,47 @@
+<template name="home">
+	<div class="page">
+  <div style="text-align: center; color: #337ab7;">
+		<img src="/img/logounican.png">
+    <br>
+    <h3>  Facultad de Ciencias y Tecnología</h3>
+    <h4>  FACITEC</h4>
+    <br>
+    <br>
+    <h5>TRABAJO FINAL DE GRADO</h5> 
+    <br>
+    <br>
+    <p>Web CPI </p> 
+    <p>Sistema para generar itenes de examenes para </p>
+    <p>el Curso Probatorio de Ingreso (CPI)</p> 
+    <br>
+    <br>
+    <br>
+    <p>Presentado por los alumnos:</p>
+    <br>
+    <p>Carlos Martínez</p>
+    <p>&</p>
+    <p>Victor Velázquez</p>
+    <br>
+    <br>
+    <br>
+    <p>@2016</p>
+		  <br>
+	</div>
+	</div>	
+</template>
+
+
+<template name="editor">
+  <div id="summernote"></div>
+  <a href="#" class="save">Guardar</a>
+  <br>
+  <a href="#" class="cargar">Cargar</a>
+</template>
+
+
+<template name="listado">
+    {{#each texto}}
+        
+        <a href="#" class="cargar">{{ _id }}</a>
+  {{/each}}
+</template>

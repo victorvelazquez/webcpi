@@ -1,0 +1,136 @@
+<template name="listaMaterias">	
+	<div class="page">
+		<h3 class="panel-title"><img src="img/materia.png" class="imagen"> Materias </h3>    
+        <hr>
+        {{#if registroProfesores}}
+		<div class="table">
+    		<table  class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Nombre</th>
+						<th>Carrera</th>
+						<th>Profesor</th>
+					</tr>
+				</thead>
+				<tbody>
+	    			{{#each materias}}	
+					<tr>
+						<td style="width: 68px;">
+							<a href="{{pathFor 'editarMateria'}}"><img src="img/editar.png"></a> 
+							{{#if noVinculado }}
+								<a href="#" class="btn-borrar"><img name="img-borrar" src="img/borrar.png"></a> 
+							{{/if}}	
+
+						</td>
+						<td>
+							{{ nombre }} 
+						</td>
+						<td>
+							 {{ carreraNombre }}
+						</td>
+						<td>
+							 {{ profesorNombre }}
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<h5><img src="img/info.png" style="width: 24px; height:24px;margin-right:5px;">{{registroCantidad}} Registro(s) encontrado(s)</h5>
+			{{> busqueda btnAgregar="agregarMateria"}}
+  		</div>
+  	{{else}}
+		<h2><img src="img/atencion.png">  Se debe cargar primero Profesor(es)</h2>
+	{{/if}}	
+  	</div>		
+</template>	
+<template name="agregarMateria">
+	<div class="page">
+	<form id="form-new-materia">
+		<h3 class="panel-title"><img src="img/materia.png" class="imagen"> Materia - Agregar</h3>	
+		<hr>
+		{{> errors}}  
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="nombre" id="nombre" type="text" placeholder="Nombre de la materia" autofocus tabindex=1 />
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<label><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   ¿ Profesor de la Matería ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+			<select class="form-control" name="profesores" id="profesores" tabindex=2 >
+ 			{{#each profesores}}
+				<option value={{_id}}>{{nombres}}, CI Nº {{ formatoNumerico documento}}</option>
+			{{/each}}
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div>
+      	<br>
+      	<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ En que carrera enseña la Matería ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+			<select class="form-control" name="carreras" id="carreras" tabindex=3 >
+				
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div>
+      	<div>
+      		<br>
+      		<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+      	</div>
+    	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary boton submit"/>
+			<a class="btn btn-default boton" href="{{pathFor 'materias'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+<template name="editarMateria">
+	<div class="page">
+	<form id="form-update-materia" >
+		<h3 class="panel-title"><img src="img/materia.png" class="imagen"> Materia - Editar </h3>	
+		<hr>
+		{{> errors}}  
+		<input type="hidden" name="id" id="id" value={{_id}} visible="false">
+    	<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+	   		<input class="form-control" name="nombre" id="nombre" value="{{nombre}}" type="text" placeholder="Nombre de la materia" autofocus tabindex=1 />
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<label><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   ¿ Profesor de la Matería ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+			<select class="form-control" name="profesores" id="profesores" tabindex=2>
+ 			{{#each profesores}}
+				<option value={{_id}} {{ seleccionarItem _id}}>{{nombres}}, {{ formatoNumerico documento}}</option>
+			{{/each}}
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div>
+      	<br>
+      	<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ En que carrera enseña la Matería ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+			<select class="form-control" name="carreras" id="carreras" tabindex=3>
+				{{#each carreras}}
+					<option value={{_id}} {{ seleccionarItem2 _id }}>{{nombre}}, {{nombreFacultad idFacultad}}</option>
+				{{/each}}
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div>
+      	<br>
+      	<div>
+      		<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+      	</div>
+      	<br>
+    	<div class='panel-inferior'>
+			<button type="submit" class="btn btn-primary boton">Guardar</button>
+			<a href="{{pathFor 'materias'}}" class="btn btn-default boton">Listado</a>
+		</div>	
+		
+	</form>
+	</div>
+</template>

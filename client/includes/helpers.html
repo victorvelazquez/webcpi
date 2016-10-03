@@ -1,0 +1,21 @@
+<template name="busqueda">
+	{{#if searching}}
+		<p>Buscando....</p>
+	{{/if}}
+  	<div class="panel-inferior">
+		<table style="border: none;">
+			<td >
+				{{#unless esAdmin}}
+					<a style="height:35px; margin-top: -30px;" href="{{pathFor ruta }}" class="btn btn-default boton">Agregar</a>
+				{{/unless}}		
+			</td>
+			<td style="width:10px;"></td>
+			<td>
+				<div class="input-group">
+					<input style="height:35px;" class="form-control btn-buscar" id="btn-buscar" name="btn-buscar" type="text" placeholder="Texto a buscar"/>
+					<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+	   			</div>
+			</td>
+		</table>
+	</div>
+</template>			

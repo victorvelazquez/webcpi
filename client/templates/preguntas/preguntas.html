@@ -1,0 +1,141 @@
+<template name="listaPreguntas">	
+	<div class="page">
+		<h3 class="panel-title"><img src="img/preguntas.png" class="imagen"> Preguntas </h3>   
+        <hr>
+		<div class="table-responsive table">
+    		<table  class="table" data-escape="false">
+				<thead>
+					<tr>
+						{{#unless esAdmin}}<th></th>{{/unless}}	
+						<th>Enunciado</th>
+						<th>Materia, Carrera</th>
+					</tr>
+				</thead>
+				<tbody>
+	    			{{#each preguntas}}	
+					<tr>
+						{{#unless esAdmin}}
+						<td style="width: 68px;">
+						
+							<a href="{{pathFor 'editarPregunta'}}"><img src="img/editar.png"></a>
+							{{#if noVinculado }}
+								<a href="#" class="btn-borrar"><img name="img-borrar" src="img/borrar.png"></a> 
+							{{/if}}	
+						</td>
+						{{/unless}}	
+						<td>
+							{{{ texto }}}
+						</td>
+						<td style="width: 15%;">
+							{{ nombreMateria }}, {{ nombreCarrera idMateria }}
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<h5><img src="img/info.png" style="width: 24px; height:24px;margin-right:5px;">{{registroCantidad}} Registro(s) encontrado(s)</h5>
+			
+			{{#if esAdmin}}
+				{{> busqueda btnAgregar="agregarPregunta" admin="true"}}
+			{{else}}	
+				{{> busqueda btnAgregar="agregarPregunta"}}
+			{{/if}}	
+  		</div>
+  		<div>
+  		</div>
+  	</div>		
+</template>	
+<template name="agregarPregunta">
+	<script type="text/javascript">
+		document.emojiSource = 'pngs/';
+	</script>
+	<div class="page">
+	<form id="form-new-pregunta">
+		<h3 class="panel-title"><img src="img/preguntas.png" class="imagen"> Pregunta - Agregar</h3>	
+		<hr>
+		{{> errors}}  
+		<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Materia, Carrera </label>
+		<div class="input-group">
+			<select class="form-control" name="materias" id="materias" tabindex=1 >
+				{{#each materias}}
+					<option value={{_id}} >{{nombre}}, {{ nombreCarrera idCarrera}}</option>
+				{{/each}}
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div><br>
+		<label><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>   Enunciado </label>
+		<textarea id="pregunta" name="pregunta"></textarea>
+		<label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>   Respuesta correcta </label>
+		<textarea id="correcta" name="correcta"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 1 </label>
+		<textarea id="incorrecta1" name="incorrecta1"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 2 </label>
+		<textarea id="incorrecta2" name="incorrecta2"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 3 </label>
+		<textarea id="incorrecta3" name="incorrecta3"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 4 </label>
+		<textarea id="incorrecta4" name="incorrecta4"></textarea>
+      	<hr>
+    	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary boton submit"/>
+			<a class="btn btn-default boton" href="{{pathFor 'preguntas'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+<template name="editarPregunta">
+	<script type="text/javascript">
+		document.emojiSource = 'pngs/';
+	</script>
+
+	<div class="page">
+	<form id="form-edit-pregunta">
+
+		<h3 class="panel-title"><img src="img/preguntas.png" class="imagen"> Pregunta - Modificar</h3>	
+		<hr>
+		{{> errors}}  
+		<input type="hidden" name="id" id="id" value={{_id}} visible="false">
+		<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Materia - Facultad </label>
+		<div class="input-group">
+			<select class="form-control" name="materias" id="materias" tabindex=1 >
+				{{#each materias}}
+					<option value={{_id}} {{ seleccionarItem _id}}>{{nombre}}, {{ nombreCarrera idCarrera}}</option>
+				{{/each}}
+			</select>
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+      	</div><br>
+
+		<label><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>   Enunciado </label>
+		<textarea id="pregunta" name="pregunta" value="{{texto}}"></textarea>
+		<label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>   Respuesta correcta </label>
+		<textarea id="correcta" name="correcta" value="{{respuesta 0}}"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 1 </label>
+		<textarea id="incorrecta1" name="incorrecta1" value="{{respuesta 1}}"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 2 </label>
+		<textarea id="incorrecta2" name="incorrecta2" value="{{respuesta 2}}"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 3 </label>
+		<textarea id="incorrecta3" name="incorrecta3" value="{{respuesta 3}}"></textarea>
+		<label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>   Respuesta incorrecta 4 </label>
+		<textarea id="incorrecta4" name="incorrecta4" value="{{respuesta 4}}"></textarea>
+      	<hr>
+    	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary boton submit"/>
+			<a class="btn btn-default boton" href="{{pathFor 'preguntas'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+<template name="examen">
+	<div>
+		<h2>Aleatoriamente</h2>	
+		<button class="btn btn-default boton generar">Generar</button>
+		<input type="checkbox" id="subrayado" name="subrayado">Subrayar respuestas
+		<br>
+		<br>
+		<div id="valores" class="respuestas">
+			
+		</div>
+		
+	</div>
+</template>	

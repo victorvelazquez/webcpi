@@ -1,0 +1,111 @@
+<template name="listaCarreras">	
+	<div class="page">
+		<h3 class="panel-title"><img src="img/carrera.png" class="imagen"> Carreras </h3>    
+        <hr>
+        {{#if registroFacultades}}
+		<div class="table">
+    		<table  class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Nombre</th>
+						<th>Facultad</th>
+					</tr>
+				</thead>
+				<tbody>
+	    			{{#each carreras}}	
+					<tr>
+						<td style="width: 68px;">
+							<a href="{{pathFor 'editarCarrera'}}"><img src="img/editar.png"></a> 
+							{{#if noVinculado }}
+								<a href="#" class="btn-borrar"><img name="img-borrar" src="img/borrar.png"></a> 
+							{{/if}}	
+						</td>
+						<td>
+							{{ nombre }} 
+						</td>
+						<td>
+							{{ facultadNombre }} 
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<h5><img src="img/info.png" style="width: 32px; height:32px; margin-right:5px;">{{registroCantidad}} Registro(s) encontrado(s)</h5>
+			{{> busqueda btnAgregar="agregarCarrera"}}
+  		</div>
+	{{else}}
+		<h2><img src="img/atencion.png">Se debe cargar primero Facultad(es)</h2>
+	{{/if}}	
+	</div>		
+</template>	
+
+<template name="agregarCarrera">
+	<div class="page">
+	<form id="form-new-carrera">
+		<h3 class="panel-title"><img src="img/carrera.png" class="imagen"> Carrera - Agregar</h3>	
+		<hr>
+		{{> errors}}  
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+   			<input class="form-control" name="nombre" id="nombre" type="text" placeholder="Nombre de la Carrera"/>
+   			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ A que Facultad pertenece esta carrera ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
+			<select class="form-control" name="facultad" id="facultad">
+ 				{{#each facultades}}
+					<option value={{_id}}>{{nombre }}</option>
+				{{/each}}
+			</select><br>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+	   	</div>
+	   	<br>
+   		<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+     	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary submit"/>
+			<a class="btn btn-default" href="{{pathFor 'carreras'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+<template name="editarCarrera">
+	<div class="page">
+	<form id="form-edit-carrera">
+		<h3 class="panel-title"><img src="img/carrera.png" class="imagen"> Carrera - Editar</h3>	
+		<hr>
+		{{> errors}}  
+		<input type="hidden" name="id" id="id" value={{_id}} visible="false">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+   			<input class="form-control" name="nombre" id="nombre" type="text" value={{nombre}} placeholder="Nombre de la Carrera"/>
+   			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+		</div>
+		<br>
+		<label><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   ¿ En que Facultad pertenece esta carrera ? </label>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
+			<select class="form-control" name="facultades" id="facultades">
+ 				{{#each facultades}}
+					<option value={{_id}} {{ seleccionarItem _id}}>{{nombre }}</option>
+				{{/each}}
+			</select><br>
+	   		<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></span>
+	   	</div>
+	   	<br>
+      	<label><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>   Campo obligatorio </label>
+     	<div class='panel-inferior'>
+			<input type="submit" value="Guardar" class="btn btn-primary submit"/>
+			<a class="btn btn-default" href="{{pathFor 'carreras'}}">Listado</a>
+		</div>
+	</form>
+	</div>
+</template>
+
+
+
+
+
